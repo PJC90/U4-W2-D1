@@ -1,5 +1,7 @@
 package es3.entities;
 
+import es3.exceptions.BancaExceptions;
+
 public class ContoCorrente {
     String titolare;
     int nMovimenti;
@@ -12,14 +14,16 @@ public class ContoCorrente {
         nMovimenti = 0;
     }
 
-    public void preleva(double x) {
+    public void preleva(double x) throws BancaExceptions {
         if (nMovimenti < maxMovimenti) {
             saldo = saldo - x;
         } else {
             saldo = saldo - x - 0.50;
-            nMovimenti++;
         }
-
+            nMovimenti++;
+        if(this.saldo <= 0){
+            throw new BancaExceptions("il conto è in rosso");
+        }
     }
     public double restituisciSaldo() {
         return saldo;
